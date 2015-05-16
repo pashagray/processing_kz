@@ -5,7 +5,6 @@ require 'processing_kz/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'processing_kz'
-  spec.rubyforge_project = 'processing_kz'
   spec.version       = ProcessingKz::VERSION
   spec.authors       = ['Pavel Tkachenko']
   spec.email         = ['tpepost@gmail.com']
