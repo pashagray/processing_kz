@@ -22,15 +22,14 @@ module ProcessingKz
       @currency_code = args[:currency_code] || ProcessingKz::Config.currency_code
       @language_code = args[:language_code] || ProcessingKz::Config.language_code
       @terminal_id = args[:terminal_id]
-      @customer_reference = args[:customer_reference]
       @order_id = args[:order_id]
-      @total_amount = args[:total_amount] * 100.to_i
       @description = args[:description]
       @goods_list = args[:goods_list]
       @purchaser_name = args[:purchaser_name]
       @purchaser_email = args[:purchaser_email]
       @purchaser_phone = args[:purchaser_phone]
-      merchant_local_date_time = args[:merchant_local_date_time] || Time.now
+      @customer_reference = args[:customer_reference]
+      self.merchant_local_date_time = args[:merchant_local_date_time] || Time.now
     end
 
     def merchant_local_date_time=(time)
