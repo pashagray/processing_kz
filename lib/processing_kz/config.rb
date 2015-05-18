@@ -34,5 +34,21 @@ module ProcessingKz
     def self.language_code
       @@language_code
     end
+
+    def self.client=(wsdl)
+      @@client = wsdl
+    end
+
+    def self.client
+      @@client
+    end
+
+    def self.host=(host)
+      @@host = host
+    end
+
+    def self.host
+      @@host
+    end
   end
 end

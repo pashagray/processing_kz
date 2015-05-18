@@ -3,8 +3,6 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 require 'processing_kz/version'
-require 'processing_kz/config'
-require 'processing_kz/start_transaction'
 
 Gem::Specification.new do |spec|
   spec.name          = 'processing_kz'
@@ -24,4 +22,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'bundler', '~> 1.7'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec'
+
+  spec.add_runtime_dependency 'savon'
 end

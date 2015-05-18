@@ -24,10 +24,24 @@ describe ProcessingKz do
     end.to raise_error(UnsupportedLanguageError)
   end
 
-  it 'sets and returns currency_ocde properly' do
+  it 'sets and returns currency_code properly' do
     ProcessingKz.config do |config|
       config.currency_code = '398'
     end
     expect(ProcessingKz::Config.currency_code).to eq('398')
+  end
+
+  it 'sets and returns client properly' do
+    ProcessingKz.config do |config|
+      config.client = 'https://test.processing.kz/CNPMerchantWebServices/CNPMerchantWebService.wsdl'
+    end
+    expect(ProcessingKz::Config.client).to eq('https://test.processing.kz/CNPMerchantWebServices/CNPMerchantWebService.wsdl')
+  end
+
+  it 'sets and returns host properly' do
+    ProcessingKz.config do |config|
+      config.host = 'https://test.processing.kz/CNPMerchantWebServices/services/CNPMerchantWebService'
+    end
+    expect(ProcessingKz::Config.host).to eq('https://test.processing.kz/CNPMerchantWebServices/services/CNPMerchantWebService')
   end
 end
