@@ -1,7 +1,8 @@
 require 'spec_helper'
 
-describe StartTransaction do
+describe ProcessingKz::StartTransaction do
+
   it 'return payment URL page' do
-    start_transaction = StartTransaction.new
+    start_transaction = ProcessingKz::StartTransaction.new
   end
 end

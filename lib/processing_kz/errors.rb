@@ -1,0 +1,1 @@
+class UnsupportedLanguageError < StandardError ; end
