@@ -2,6 +2,7 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'processing_kz/version'
+require 'processing_kz/config'
 
 Gem::Specification.new do |spec|
   spec.name          = 'processing_kz'
