@@ -56,7 +56,7 @@ module ProcessingKz
       end
 
       def do
-        client = Savon.client(wsdl: Config.client, endpoint: Config.host)
+        client = Savon.client(wsdl: Config.wsdl, endpoint: Config.host)
         response = client.call(:start_transaction, message: { 
           transaction: {
             merchant_id: merchant_id,

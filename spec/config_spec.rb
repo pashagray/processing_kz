@@ -31,11 +31,11 @@ describe ProcessingKz do
     expect(ProcessingKz::Config.currency_code).to eq('398')
   end
 
-  it 'sets and returns client properly' do
+  it 'sets and returns wsdl properly' do
     ProcessingKz.config do |config|
-      config.client = 'https://test.processing.kz/CNPMerchantWebServices/CNPMerchantWebService.wsdl'
+      config.wsdl = 'https://test.processing.kz/CNPMerchantWebServices/CNPMerchantWebService.wsdl'
     end
-    expect(ProcessingKz::Config.client).to eq('https://test.processing.kz/CNPMerchantWebServices/CNPMerchantWebService.wsdl')
+    expect(ProcessingKz::Config.wsdl).to eq('https://test.processing.kz/CNPMerchantWebServices/CNPMerchantWebService.wsdl')
   end
 
   it 'sets and returns host properly' do

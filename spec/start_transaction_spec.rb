@@ -5,7 +5,7 @@ describe ProcessingKz::StartTransaction do
   before do
 
     ProcessingKz.config do |config|
-      config.client = 'https://test.processing.kz/CNPMerchantWebServices/CNPMerchantWebService.wsdl'
+      config.wsdl = 'https://test.processing.kz/CNPMerchantWebServices/CNPMerchantWebService.wsdl'
       config.host = 'https://test.processing.kz/CNPMerchantWebServices/services/CNPMerchantWebService'
       config.merchant_id = '333000000000000'
       config.language_code = 'ru'
