@@ -38,11 +38,10 @@ feature 'Transaction' do
     expect(status.do.transaction_status).to eq('PENDING_CUSTOMER_INPUT')
   end
 
-  it 'makes request for transaction status which is paid' do
+  it 'makes request for transaction status which is authorised' do
     request = ProcessingKz::StartTransaction::Request.new(order_id: rand(1..1000000), goods_list: @goods, return_url: 'http://google.com')
     response = request.do
     visit response.redirect_url
-    expect(page).to have_content(request.order_id)
     fill_in 'panPart1', with: '4012'
     fill_in 'panPart2', with: '0010'
     fill_in 'panPart3', with: '3844'
@@ -57,5 +56,27 @@ feature 'Transaction' do
     sleep 5
     status = ProcessingKz::GetTransaction::Request.new(customer_reference: response.customer_reference)
     expect(status.do.transaction_status).to eq('AUTHORISED')
+  end
+
+  it 'makes complete all process of transaction' do
+    request = ProcessingKz::StartTransaction::Request.new(order_id: rand(1..1000000), goods_list: @goods, return_url: 'http://google.com')
+    response = request.do
+    visit response.redirect_url
+    fill_in 'panPart1', with: '4012'
+    fill_in 'panPart2', with: '0010'
+    fill_in 'panPart3', with: '3844'
+    fill_in 'panPart4', with: '3335'
+    select  '01', from: 'expiryMonth'
+    select  '2029', from: 'expiryYear'
+    fill_in 'cardHolder', with: 'MARIA SIDOROVA'
+    fill_in 'cardSecurityCode', with: '123'
+    fill_in 'cardHolderEmail', with: 'test@processing.kz'
+    fill_in 'cardHolderPhone', with: '87011234567'
+    click_button 'Pay'
+    sleep 5
+    complete = ProcessingKz::CompleteTransaction::Request.new(customer_reference: response.customer_reference, transaction_success: true)
+    expect(complete.do.success).to eq(true)
+    status = ProcessingKz::GetTransaction::Request.new(customer_reference: response.customer_reference)
+    expect(status.do.transaction_status).to eq('PAID')
   end
 end

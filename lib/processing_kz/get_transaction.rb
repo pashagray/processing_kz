@@ -49,6 +49,23 @@ module ProcessingKz
         @merchant_online_address = args[:merchant_online_address]
         @merchant_local_date_time = args[:merchant_local_date_time] || Time.now
       end
+
+      def total_amount
+        raise NoGoodsError unless goods_list
+        total = 0
+        goods_list.each do |good|
+          total += good.amount
+        end
+        total
+      end
+
+      def hashed_goods_list
+        hash = []
+        goods_list.each do |good|
+          hash << good.to_hash
+        end
+        hash
+      end
     end
   end
 end
