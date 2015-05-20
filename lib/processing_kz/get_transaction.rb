@@ -41,7 +41,7 @@ module ProcessingKz
         @amount_requested = args[:amount_requested]
         @amount_authorized = args[:amount_authorized]
         @amount_refunded = args[:amount_refunded]
-        @goods = args[:goods_list]
+        goods = args[:goods_list]
         @auth_code = args[:auth_code]
         @purchaser_name = args[:purchaser_name]
         @purchaser_email = args[:purchaser_email]
@@ -52,6 +52,11 @@ module ProcessingKz
 
       def status
         @transaction_status
+      end
+
+      def goods=(goods)
+        @goods = goods if goods.class == Array
+        @goods = [goods] unless goods.class == Array
       end
 
       def total_amount

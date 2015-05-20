@@ -43,7 +43,7 @@ Full transaction process includes 3 steps. First you need to initiate transactio
 Next step is to check that money is successfuly blocked on customer's card. Just pass customer_reference obtained from previous method.
   
     transaction = ProcessingKz.get(customer_reference: start.customer_reference)
-    transaction.status # 'AUTHORISED'
+    transaction.status #=> 'AUTHORISED'
 
 Finaly you need to complete transaction to withdraw money from card. Again just pass customer_reference which you obtained during starting transaction.
   
@@ -52,7 +52,19 @@ Finaly you need to complete transaction to withdraw money from card. Again just 
 Check that everything is alright. You have to get `'PAID'` status.
     
     transaction = ProcessingKz.get(customer_reference: start.customer_reference)
-    transaction.status # 'PAID'
+    transaction.status #=> 'PAID'
+
+### List of Goods
+  
+ProcessingKz is requiring list of goods or services for transaction. You can pass one good or array of goods in transaction. 
+    
+    my_good = ProcessingKz.good(title: 'Title of good', amount 1200.99)
+    start = ProcessingKz.start(order_id: 1, goods_list: my_good, return_url: 'page for customer to continiue after payment')
+
+### Return URL
+  
+After finishing paying process in Processing.kz frame, user will be redirected to URL, which you defined in return_url. This will help you to continiue process on your site after successful payment.
+
 
 ## Contributing
 
