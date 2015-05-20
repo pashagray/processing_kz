@@ -12,7 +12,7 @@ module ProcessingKz
       def initialize(args= {})
         @merchant_id = args[:merchant_id] || Config.merchant_id
         @customer_reference = args[:customer_reference]
-        @transaction_success = args[:transaction_success]
+        @transaction_success = args[:transaction_success] || true
         @override_amount = args[:override_amount]
         @goods_list = args[:goods_list]
       end
@@ -35,7 +35,7 @@ module ProcessingKz
       end
 
       def do
-        client = Savon.client(wsdl: Config.wsdl, endpoint: Config.host, log: true)
+        client = Savon.client(wsdl: Config.wsdl, endpoint: Config.host)
         response = client.call(:complete_transaction, message: { 
           merchant_id: merchant_id,
           customer_reference: customer_reference,
