@@ -58,10 +58,9 @@ feature 'Transaction' do
     expect(status.do.transaction_status).to eq('AUTHORISED')
   end
 
-  it 'makes complete all process of transaction' do
-    request = ProcessingKz::StartTransaction::Request.new(order_id: rand(1..1000000), goods_list: @goods, return_url: 'http://google.com')
-    response = request.do
-    visit response.redirect_url
+  it 'successfuly makes all process of transaction through coder friendly interface' do
+    start = ProcessingKz.start(order_id: rand(1..1000000), goods_list: @goods, return_url: 'http://google.com')
+    visit start.redirect_url
     fill_in 'panPart1', with: '4012'
     fill_in 'panPart2', with: '0010'
     fill_in 'panPart3', with: '3844'
@@ -74,9 +73,8 @@ feature 'Transaction' do
     fill_in 'cardHolderPhone', with: '87011234567'
     click_button 'Pay'
     sleep 5
-    complete = ProcessingKz::CompleteTransaction::Request.new(customer_reference: response.customer_reference, transaction_success: true)
-    expect(complete.do.success).to eq(true)
-    status = ProcessingKz::GetTransaction::Request.new(customer_reference: response.customer_reference)
-    expect(status.do.transaction_status).to eq('PAID')
+    ProcessingKz.complete(customer_reference: start.customer_reference, transaction_success: true)
+    status = ProcessingKz.get(customer_reference: start.customer_reference)
+    expect(status.transaction_status).to eq('PAID')
   end
 end
