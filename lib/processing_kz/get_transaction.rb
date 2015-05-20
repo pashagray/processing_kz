@@ -50,6 +50,10 @@ module ProcessingKz
         @merchant_local_date_time = args[:merchant_local_date_time] || Time.now
       end
 
+      def status
+        @transaction_status
+      end
+
       def total_amount
         raise NoGoodsError unless goods_list
         total = 0

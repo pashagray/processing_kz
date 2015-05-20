@@ -18,7 +18,7 @@ Or install it yourself as:
 
     $ gem install processing_kz
 
-If you are using Rails 3+, please initiate configuration file by running
+If you are using Rails 3+, please initiate configuration file by running:
 
     rake processing_kz:install
 
@@ -36,18 +36,23 @@ If you are not using Rails, include this configuration in appropriate place, so 
 
 ## Usage
 
-Full transaction process includes 3 steps. First you need to initiate transaction process and provide 
+Full transaction process includes 3 steps. First you need to initiate transaction process and provide at least order_id, list of goods (see additional info below) and return url.
 
     start = ProcessingKz.start(order_id: 1, goods_list: @goods, return_url: 'page for customer to continiue after payment')
 
 Next step is to check that money is successfuly blocked on customer's card. Just pass customer_reference obtained from previous method.
   
-    status = ProcessingKz.get(customer_reference: start.customer_reference)
+    transaction = ProcessingKz.get(customer_reference: start.customer_reference)
+    transaction.status # 'AUTHORISED'
 
 Finaly you need to complete transaction to withdraw money from card. Again just pass customer_reference which you obtained during starting transaction.
   
     ProcessingKz.complete(customer_reference: start.customer_reference)
 
+Check that everything is alright. You have to get `'PAID'` status.
+    
+    transaction = ProcessingKz.get(customer_reference: start.customer_reference)
+    transaction.status # 'PAID'
 
 ## Contributing
 
