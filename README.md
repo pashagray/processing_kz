@@ -20,7 +20,7 @@ Or install it yourself as:
 
 If you are using Rails 3+, please initiate configuration file by running:
 
-    rake processing_kz:install
+    rails g processing_kz:config
 
 We will generate configuration file for you in `config/initializers`. You have to set all credentials received from Processing.kz provider.
 
