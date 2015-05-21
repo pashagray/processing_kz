@@ -27,6 +27,7 @@ module ProcessingKz
         @description = args[:description]
         @goods_list = args[:goods_list]
         @purchaser_name = args[:purchaser_name]
+        @return_url = args[:return_url]
         @purchaser_email = args[:purchaser_email]
         @purchaser_phone = args[:purchaser_phone]
         @customer_reference = args[:customer_reference]
