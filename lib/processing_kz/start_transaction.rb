@@ -66,7 +66,7 @@ module ProcessingKz
             order_id: order_id,
             goods_list: hashed_goods_list,
             merchant_local_date_time: merchant_local_date_time,
-            return_u_r_l: 'http://localhost',
+            return_u_r_l: return_url,
             total_amount: total_amount.to_i
             }
           }

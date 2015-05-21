@@ -56,6 +56,7 @@ feature 'Transaction' do
     sleep 5
     status = ProcessingKz::GetTransaction::Request.new(customer_reference: response.customer_reference)
     expect(status.do.transaction_status).to eq('AUTHORISED')
+    click_button 'Return'
   end
 
   it 'successfuly makes all process of transaction through coder friendly interface' do
@@ -76,5 +77,6 @@ feature 'Transaction' do
     ProcessingKz.complete(customer_reference: start.customer_reference, transaction_success: true)
     status = ProcessingKz.get(customer_reference: start.customer_reference)
     expect(status.transaction_status).to eq('PAID')
+    click_button 'Return'
   end
 end
