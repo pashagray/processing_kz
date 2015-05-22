@@ -62,7 +62,7 @@ module ProcessingKz
     def hashed_goods_list
       raise NoGoodsError unless goods_list
       hash = []
-      goods_list.reduce { |good| hash << good.to_hash }
+      goods_list.each { |good| hash << good.to_hash }
       hash
     end
 
