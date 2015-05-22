@@ -1,80 +1,78 @@
 require 'savon'
 
 module ProcessingKz
-  module GetTransaction
-    class Request
-      attr_reader :merchant_id, :customer_reference
+  class GetTransaction
 
-      def initialize(args= {})
-        @merchant_id = args[:merchant_id] || Config.merchant_id
-        @customer_reference = args[:customer_reference]
-      end
+    attr_reader :merchant_id, 
+                :customer_reference,
+                :transaction_status,
+                :transaction_currency_code,
+                :amount_requested,
+                :amount_authorized,
+                :amount_refunded,
+                :goods,
+                :auth_code,
+                :purchaser_name,
+                :purchaser_email,
+                :purchaser_phone,
+                :merchant_local_date_time,
+                :merchant_online_address
 
-      def do
-        client = Savon.client(wsdl: Config.wsdl, endpoint: Config.host)
-        response = client.call(:get_transaction_status, message: { 
-          merchant_id: merchant_id,
-          customer_reference: customer_reference
-          }
-        )
-        Response.new(response.body[:get_transaction_status_response][:return])
-      end
+    def initialize(args= {})
+      @merchant_id = args[:merchant_id] || Config.merchant_id
+      @customer_reference = args[:customer_reference]
+      request!
     end
 
-    class Response
-      attr_reader :transaction_status,
-                  :transaction_currency_code,
-                  :amount_requested,
-                  :amount_authorized,
-                  :amount_refunded,
-                  :goods,
-                  :auth_code,
-                  :purchaser_name,
-                  :purchaser_email,
-                  :purchaser_phone,
-                  :merchant_local_date_time,
-                  :merchant_online_address
+    def status
+      @transaction_status
+    end
 
-      def initialize(args = {})
-        @transaction_status = args[:transaction_status]
-        @transaction_currency_code = args[:currency_code] || Config.currency_code
-        @amount_requested = args[:amount_requested]
-        @amount_authorized = args[:amount_authorized]
-        @amount_refunded = args[:amount_refunded]
-        goods = args[:goods_list]
-        @auth_code = args[:auth_code]
-        @purchaser_name = args[:purchaser_name]
-        @purchaser_email = args[:purchaser_email]
-        @purchaser_phone = args[:purchaser_phone]
-        @merchant_online_address = args[:merchant_online_address]
-        @merchant_local_date_time = args[:merchant_local_date_time] || Time.now
-      end
+    def goods=(goods)
+      @goods = goods if goods.class == Array
+      @goods = [goods] unless goods.class == Array
+    end
 
-      def status
-        @transaction_status
+    def total_amount
+      raise NoGoodsError unless goods_list
+      total = 0
+      goods_list.each do |good|
+        total += good.amount
       end
+      total
+    end
 
-      def goods=(goods)
-        @goods = goods if goods.class == Array
-        @goods = [goods] unless goods.class == Array
+    def hashed_goods_list
+      hash = []
+      goods_list.each do |good|
+        hash << good.to_hash
       end
+      hash
+    end
 
-      def total_amount
-        raise NoGoodsError unless goods_list
-        total = 0
-        goods_list.each do |good|
-          total += good.amount
-        end
-        total
-      end
+    def request!
+      client = Savon.client(wsdl: Config.wsdl, endpoint: Config.host)
+      response = client.call(:get_transaction_status, message: { 
+        merchant_id: merchant_id,
+        customer_reference: customer_reference
+        }
+      )
+      response(response.body[:get_transaction_status_response][:return])
+    end
 
-      def hashed_goods_list
-        hash = []
-        goods_list.each do |good|
-          hash << good.to_hash
-        end
-        hash
-      end
+    def response(args = {})
+      @transaction_status = args[:transaction_status]
+      @transaction_currency_code = args[:currency_code] || Config.currency_code
+      @amount_requested = args[:amount_requested]
+      @amount_authorized = args[:amount_authorized]
+      @amount_refunded = args[:amount_refunded]
+      @auth_code = args[:auth_code]
+      @purchaser_name = args[:purchaser_name]
+      @purchaser_email = args[:purchaser_email]
+      @purchaser_phone = args[:purchaser_phone]
+      @merchant_online_address = args[:merchant_online_address]
+      @merchant_local_date_time = args[:merchant_local_date_time] || Time.now
+      self.goods = args[:goods_list]
     end
   end
 end

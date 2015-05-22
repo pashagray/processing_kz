@@ -5,7 +5,7 @@ module ProcessingKz
   end
 
   def self.get(*args)
-    GetTransaction::Request.new(*args).do
+    GetTransaction.new(*args)
   end
 
   def self.complete(*args)

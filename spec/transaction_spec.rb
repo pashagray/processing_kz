@@ -36,8 +36,8 @@ feature 'Transaction' do
 
   it 'makes request for transaction status which is pending' do
     request = ProcessingKz::StartTransaction.new(order_id: rand(1..1000000), goods_list: @goods, return_url: 'http://localhost')
-    status = ProcessingKz::GetTransaction::Request.new(customer_reference: request.customer_reference)
-    expect(status.do.transaction_status).to eq('PENDING_CUSTOMER_INPUT')
+    status = ProcessingKz::GetTransaction.new(customer_reference: request.customer_reference)
+    expect(status.transaction_status).to eq('PENDING_CUSTOMER_INPUT')
   end
 
   it 'makes request for transaction status which is authorised' do
@@ -55,8 +55,8 @@ feature 'Transaction' do
     fill_in 'cardHolderPhone', with: '87771234567'
     click_button 'Pay'
     sleep 5
-    status = ProcessingKz::GetTransaction::Request.new(customer_reference: request.customer_reference)
-    expect(status.do.transaction_status).to eq('AUTHORISED')
+    status = ProcessingKz::GetTransaction.new(customer_reference: request.customer_reference)
+    expect(status.transaction_status).to eq('AUTHORISED')
     click_button 'Return'
   end
 
