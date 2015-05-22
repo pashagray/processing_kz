@@ -20,30 +20,29 @@ feature 'Transaction' do
   end
 
   it 'handles total amount correctly (*100)' do
-    request = ProcessingKz::StartTransaction::Request.new(order_id: rand(1..1000000), goods_list: @goods, return_url: 'http://localhost')
+    request = ProcessingKz::StartTransaction.new(order_id: rand(1..1000000), goods_list: @goods, return_url: 'http://localhost')
     expect(request.total_amount).to eq(132099)
   end
 
   it 'makes a successful start transaction request' do
-    request = ProcessingKz::StartTransaction::Request.new(order_id: rand(1..1000000), goods_list: @goods, return_url: 'http://localhost')
-    expect(request.do.success).to eq(true)
+    request = ProcessingKz::StartTransaction.new(order_id: rand(1..1000000), goods_list: @goods, return_url: 'http://localhost')
+    expect(request.success).to eq(true)
   end
 
   it 'makes a unsuccessful star transaction request' do
-    request = ProcessingKz::StartTransaction::Request.new(merchant_id: 'bad_id', goods_list: @goods)
-    expect(request.do.success).to eq(false)
+    request = ProcessingKz::StartTransaction.new(merchant_id: 'bad_id', goods_list: @goods)
+    expect(request.success).to eq(false)
   end
 
   it 'makes request for transaction status which is pending' do
-    request = ProcessingKz::StartTransaction::Request.new(order_id: rand(1..1000000), goods_list: @goods, return_url: 'http://localhost')
-    status = ProcessingKz::GetTransaction::Request.new(customer_reference: request.do.customer_reference)
+    request = ProcessingKz::StartTransaction.new(order_id: rand(1..1000000), goods_list: @goods, return_url: 'http://localhost')
+    status = ProcessingKz::GetTransaction::Request.new(customer_reference: request.customer_reference)
     expect(status.do.transaction_status).to eq('PENDING_CUSTOMER_INPUT')
   end
 
   it 'makes request for transaction status which is authorised' do
-    request = ProcessingKz::StartTransaction::Request.new(order_id: rand(1..1000000), goods_list: @goods, return_url: 'http://google.com')
-    response = request.do
-    visit response.redirect_url
+    request = ProcessingKz::StartTransaction.new(order_id: rand(1..1000000), goods_list: @goods, return_url: 'http://google.com')
+    visit request.redirect_url
     fill_in 'panPart1', with: '4012'
     fill_in 'panPart2', with: '0010'
     fill_in 'panPart3', with: '3844'
@@ -56,7 +55,7 @@ feature 'Transaction' do
     fill_in 'cardHolderPhone', with: '87771234567'
     click_button 'Pay'
     sleep 5
-    status = ProcessingKz::GetTransaction::Request.new(customer_reference: response.customer_reference)
+    status = ProcessingKz::GetTransaction::Request.new(customer_reference: request.customer_reference)
     expect(status.do.transaction_status).to eq('AUTHORISED')
     click_button 'Return'
   end

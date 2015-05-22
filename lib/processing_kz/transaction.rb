@@ -1,7 +1,7 @@
 module ProcessingKz
-  
+
   def self.start(*args)
-    StartTransaction::Request.new(*args).do
+    StartTransaction.new(*args)
   end
 
   def self.get(*args)
