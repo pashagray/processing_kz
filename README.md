@@ -1,5 +1,7 @@
 # ProcessingKz
 
+<img src="https://badge.fury.io/rb/processing_kz.svg" data-bindattr-39="39" class="retina-badge">
+
 Integrate Ruby projects with Processing.kz without pain. Current version supports only standard payments without refunding. Please watch project for new releases.
 
 ## Installation
