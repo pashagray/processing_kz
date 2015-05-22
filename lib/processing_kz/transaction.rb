@@ -9,7 +9,7 @@ module ProcessingKz
   end
 
   def self.complete(*args)
-    CompleteTransaction::Request.new(*args).do
+    CompleteTransaction.new(*args)
   end
 
   def self.good(*args)
