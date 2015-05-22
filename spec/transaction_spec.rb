@@ -13,8 +13,10 @@ feature 'Transaction' do
     end
 
     @goods = []
-    @goods << ProcessingKz::GoodsItem.new(name_of_goods: 'Cool stuff', merchants_goods_id: 124, amount: 1200.00)
-    @goods << ProcessingKz::GoodsItem.new(name_of_goods: 'Mega stuff', merchants_goods_id: 125, amount: 120.99)
+    @goods << ProcessingKz::GoodsItem.new(title: 'Cool stuff', good_id: 124, amount: 1200.00)
+    @goods << ProcessingKz::GoodsItem.new(title: 'Mega stuff', good_id: 125, amount: 120.99)
+
+    @good = ProcessingKz::GoodsItem.new(title: 'One stuff', good_id: 125, amount: 12070)
   end
 
   it 'handles total amount correctly (*100)' do
@@ -60,7 +62,7 @@ feature 'Transaction' do
   end
 
   it 'successfuly makes all process of transaction through coder friendly interface' do
-    start = ProcessingKz.start(order_id: rand(1..1000000), goods_list: @goods, return_url: 'http://google.com')
+    start = ProcessingKz.start(order_id: rand(1..1000000), goods_list: @good, return_url: 'http://google.com')
     visit start.redirect_url
     fill_in 'panPart1', with: '4012'
     fill_in 'panPart2', with: '0010'

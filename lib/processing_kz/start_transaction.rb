@@ -10,8 +10,8 @@ module ProcessingKz
                   :customer_reference,
                   :order_id,
                   :description,
-                  :billing_address,
                   :goods_list,
+                  :billing_address,
                   :return_url,
                   :purchaser_name,
                   :purchaser_email,
@@ -25,13 +25,21 @@ module ProcessingKz
         @terminal_id = args[:terminal_id]
         @order_id = args[:order_id]
         @description = args[:description]
-        @goods_list = args[:goods_list]
         @purchaser_name = args[:purchaser_name]
         @return_url = args[:return_url]
         @purchaser_email = args[:purchaser_email]
         @purchaser_phone = args[:purchaser_phone]
         @customer_reference = args[:customer_reference]
+        self.goods_list = args[:goods_list]
         self.merchant_local_date_time = args[:merchant_local_date_time] || Time.now
+      end
+
+      def goods_list=(goods)
+        if goods.class == Array
+          @goods_list = goods
+        else
+          @goods_list = [goods]
+        end
       end
 
       def merchant_local_date_time=(time)
@@ -49,10 +57,9 @@ module ProcessingKz
       end
 
       def hashed_goods_list
+        raise NoGoodsError unless goods_list
         hash = []
-        goods_list.each do |good|
-          hash << good.to_hash
-        end
+        goods_list.reduce { |good| hash << good.to_hash }
         hash
       end
 
