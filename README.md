@@ -49,12 +49,14 @@ Next step is to check that money is successfuly blocked on customer's card. Just
 
 Finaly you need to complete transaction to withdraw money from card. Again just pass customer_reference which you obtained during starting transaction.
   
-    ProcessingKz.complete(customer_reference: start.customer_reference)
+    ProcessingKz.complete(customer_reference: start.customer_reference, transaction_success: true)
 
 Check that everything is alright. You have to get `'PAID'` status.
     
     transaction = ProcessingKz.get(customer_reference: start.customer_reference)
     transaction.status #=> 'PAID'
+
+If you want to decline transaction, pass `false` in transaction_success instead of `true`.
 
 ### List of Goods
   

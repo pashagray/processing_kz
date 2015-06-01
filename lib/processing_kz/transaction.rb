@@ -1,5 +1,5 @@
 module ProcessingKz
-
+  
   def self.start(*args)
     StartTransaction.new(*args)
   end

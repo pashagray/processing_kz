@@ -12,7 +12,7 @@ module ProcessingKz
     def initialize(args= {})
       @merchant_id = args[:merchant_id] || Config.merchant_id
       @customer_reference = args[:customer_reference]
-      @transaction_success = args[:transaction_success] || true
+      @transaction_success = args[:transaction_success]
       @override_amount = args[:override_amount]
       @goods_list = args[:goods_list]
       request!
