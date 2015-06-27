@@ -54,7 +54,7 @@ module ProcessingKz
       client = Savon.client(wsdl: Config.wsdl, endpoint: Config.host)
       response = client.call(:get_transaction_status, message: { 
         merchant_id: merchant_id,
-        customer_reference: customer_reference
+        reference_nr: customer_reference
         }
       )
       response(response.body[:get_transaction_status_response][:return])

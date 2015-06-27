@@ -39,7 +39,7 @@ module ProcessingKz
       client = Savon.client(wsdl: Config.wsdl, endpoint: Config.host)
       response = client.call(:complete_transaction, message: { 
         merchant_id: merchant_id,
-        customer_reference: customer_reference,
+        reference_nr: customer_reference,
         transaction_success: transaction_success,
         override_amount: override_amount,
         goods_list: goods_list
