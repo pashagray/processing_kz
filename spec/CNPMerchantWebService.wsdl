@@ -1,0 +1,867 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns="http://kz.processing.cnp.merchant_ws/xsd" xmlns:ax25="http://merchant_web_services.cnp.processing.kz/xsd" xmlns:ax23="http://beans.merchant_web_services.cnp.processing.kz/xsd" xmlns:ax21="http://beans.common.cnp.processing.kz/xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://org.apache.axis2/xsd" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://merchant_web_services.cnp.processing.kz" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://merchant_web_services.cnp.processing.kz">
+    <wsdl:types>
+        <xs:schema xmlns:ax26="http://beans.common.cnp.processing.kz/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://merchant_web_services.cnp.processing.kz/xsd">
+            <xs:import namespace="http://beans.common.cnp.processing.kz/xsd"/>
+            <xs:complexType name="TransactionCardDetails">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="cardNumber" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="cardholderName" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="currencyCode" type="xs:int"/>
+                    <xs:element minOccurs="0" name="customerReference" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="expiryDate" nillable="true" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="goodsList" nillable="true" type="ax26:GoodsItem"/>
+                    <xs:element minOccurs="0" name="languageCode" nillable="true" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="merchantAdditionalInformationList" nillable="true" type="ax26:AdditionalInformation"/>
+                    <xs:element minOccurs="0" name="merchantId" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="merchantLocalDateTime" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="orderId" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="paymentType" type="xs:int"/>
+                    <xs:element minOccurs="0" name="purchaserEmail" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="purchaserPhone" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="required3DS" nillable="true" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="secureCode" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="terminalID" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="totalAmount" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://beans.merchant_web_services.cnp.processing.kz/xsd">
+            <xs:complexType name="StartTransactionResult">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="customerReference" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="errorDescription" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="redirectURL" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="success" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="StartCashOutToRegisteredCardResult">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="customerReference" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="errorDescription" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="rspCode" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="success" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Authorise3DSResult">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="acsURL" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="customerReference" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="errorDescription" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="md" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="paReq" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="tranGUID" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="transactionStatus" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://beans.common.cnp.processing.kz/xsd">
+            <xs:complexType name="TransferTransactionDetails">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="additionalInformationList" nillable="true" type="ax21:AdditionalInformation"/>
+                    <xs:element minOccurs="0" name="currencyCode" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="customerReference" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="languageCode" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="merchantId" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="merchantKeyword" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="merchantLocalDateTime" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="receiverAccount" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="receiverName" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="returnURL" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="senderName" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="terminalId" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="tranAmount" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="AdditionalInformation">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="key" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="value" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="GoodsItem">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="amount" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="currencyCode" type="xs:int"/>
+                    <xs:element minOccurs="0" name="merchantsGoodsID" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="nameOfGoods" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="StoredTransactionStatus">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="additionalInformation" nillable="true" type="ax21:AdditionalInformation"/>
+                    <xs:element minOccurs="0" name="amountAuthorised" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="amountRefunded" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="amountRequested" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="amountSettled" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="authCode" nillable="true" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="goods" nillable="true" type="ax21:GoodsItem"/>
+                    <xs:element minOccurs="0" name="merchantLocalDateTime" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="merchantOnlineAddress" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="orderId" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="purchaserEmail" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="purchaserName" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="purchaserPhone" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="transactionCurrencyCode" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="transactionStatus" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="TransactionDetails">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="billingAddress" nillable="true" type="ax21:Address"/>
+                    <xs:element minOccurs="0" name="cardId" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="currencyCode" type="xs:int"/>
+                    <xs:element minOccurs="0" name="customerReference" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="goodsList" nillable="true" type="ax21:GoodsItem"/>
+                    <xs:element minOccurs="0" name="languageCode" nillable="true" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="merchantAdditionalInformationList" nillable="true" type="ax21:AdditionalInformation"/>
+                    <xs:element minOccurs="0" name="merchantId" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="merchantLocalDateTime" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="orderId" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="paymentType" type="xs:int"/>
+                    <xs:element minOccurs="0" name="purchaserEmail" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="purchaserName" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="purchaserPhone" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="returnURL" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="terminalID" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="totalAmount" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Address">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="addressLine1" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="addressLine2" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="city" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="country" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="county" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="zip" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="TrustedTransferTransactionDetails">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="additionalInformationList" nillable="true" type="ax21:AdditionalInformation"/>
+                    <xs:element minOccurs="0" name="currencyCode" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="customerReference" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="merchantId" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="merchantKeyword" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="receiverAccount" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="receiverAddress" nillable="true" type="ax21:Address"/>
+                    <xs:element minOccurs="0" name="receiverName" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="senderAccount" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="senderAddress" nillable="true" type="ax21:Address"/>
+                    <xs:element minOccurs="0" name="senderCVV2" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="senderExpMonth" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="senderExpYear" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="senderName" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="terminalId" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="tranAmount" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="BankTransferTransactionDetails">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="additionalInformationList" nillable="true" type="ax21:AdditionalInformation"/>
+                    <xs:element minOccurs="0" name="currencyCode" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="customerReference" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="kno" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="knoDescription" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="languageCode" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="merchantId" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="merchantKeyword" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="merchantLocalDateTime" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="receiverAccount" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="receiverBankBIK" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="receiverEntityType" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="receiverIIN" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="receiverName" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="receiverResidencyType" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="responseCode" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="returnUrl" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="senderEntityType" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="senderIIN" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="senderName" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="senderResidencyType" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="terminalId" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="tranAmount" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="tranFee" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="StoredBankTransferTransactionStatus">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="additionalInformation" nillable="true" type="ax21:AdditionalInformation"/>
+                    <xs:element minOccurs="0" name="amount" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="errorDescription" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="merchantLocalDateTime" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="merchantOnlineAddress" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="receiverEmail" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="receiverName" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="receiverPhone" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="senderEmail" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="senderName" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="senderPhone" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="success" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="transactionCurrencyCode" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="transactionStatus" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="userIpAddress" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="StoredTransferTransactionStatus">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="additionalInformation" nillable="true" type="ax21:AdditionalInformation"/>
+                    <xs:element minOccurs="0" name="altCardIssuerCountry" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="altMaskedCardNumber" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="amount" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="authCode" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="cardIssuerCountry" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="errorDescription" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="fee" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="maskedCardNumber" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="merchantLocalDateTime" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="merchantOnlineAddress" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="receiverEmail" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="receiverName" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="receiverPhone" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="rspCode" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="senderEmail" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="senderName" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="senderPhone" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="success" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="transactionCurrencyCode" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="transactionStatus" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="userIpAddress" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="verified3D" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="StoredTransactionStatusCode">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="additionalInformation" nillable="true" type="ax21:AdditionalInformation"/>
+                    <xs:element minOccurs="0" name="amountAuthorised" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="amountRefunded" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="amountRequested" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="amountSettled" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="authCode" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="bankRRN" nillable="true" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="goods" nillable="true" type="ax21:GoodsItem"/>
+                    <xs:element minOccurs="0" name="issuerBank" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="merchantLocalDateTime" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="merchantOnlineAddress" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="orderId" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="purchaserEmail" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="purchaserName" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="purchaserPhone" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="rspCode" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="rspCodeDesc" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="sinkNode" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="transactionCurrencyCode" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="transactionStatus" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="StoredTransactionStatusExtended">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="cardIssuerCountry" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="maskedCardNumber" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="purchaserIpAddress" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="verified3D" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="CurrencyRateDetails">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="currencyConversionRate" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="errorDescription" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="success" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema xmlns:ax27="http://merchant_web_services.cnp.processing.kz/xsd" xmlns:ax24="http://beans.merchant_web_services.cnp.processing.kz/xsd" xmlns:ax22="http://beans.common.cnp.processing.kz/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://kz.processing.cnp.merchant_ws/xsd">
+            <xs:import namespace="http://beans.common.cnp.processing.kz/xsd"/>
+            <xs:import namespace="http://beans.merchant_web_services.cnp.processing.kz/xsd"/>
+            <xs:import namespace="http://merchant_web_services.cnp.processing.kz/xsd"/>
+            <xs:element name="startTransferTransaction">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="transaction" nillable="true" type="ax21:TransferTransactionDetails"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="startTransferTransactionResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax23:StartTransactionResult"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="startTransactionWithCardDetails">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="transaction" nillable="true" type="ax27:TransactionCardDetails"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="startTransactionWithCardDetailsResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax21:StoredTransactionStatus"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="startTransaction">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="transaction" nillable="true" type="ax21:TransactionDetails"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="startTransactionResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax23:StartTransactionResult"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="startCashOutTransaction">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="transaction" nillable="true" type="ax21:TransferTransactionDetails"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="startCashOutTransactionResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax23:StartTransactionResult"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="startCashOutToRegisteredCard">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="transaction" nillable="true" type="ax21:TransferTransactionDetails"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="startCashOutToRegisteredCardResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax23:StartCashOutToRegisteredCardResult"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="startCashInTransaction">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="transaction" nillable="true" type="ax21:TransferTransactionDetails"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="startCashInTransactionResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax23:StartTransactionResult"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="refundTransaction">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="merchantId" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="referenceNr" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="refundAmount" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="goodsToRefund" nillable="true" type="ax21:GoodsItem"/>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="additionalInformation" nillable="true" type="ax21:AdditionalInformation"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="refundTransactionResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="processTrustedTransferTransaction">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="transaction" nillable="true" type="ax21:TrustedTransferTransactionDetails"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="processTrustedTransferTransactionResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax23:StartTransactionResult"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="processBankTransferTransaction">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="transaction" nillable="true" type="ax21:BankTransferTransactionDetails"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="processBankTransferTransactionResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax21:StoredBankTransferTransactionStatus"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getVersion">
+                <xs:complexType>
+                    <xs:sequence/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getVersionResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getTransferTransactionStatus">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="merchantId" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="referenceNr" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="merchantKeyword" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getTransferTransactionStatusResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax21:StoredTransferTransactionStatus"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getTransactionStatusCode">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="merchantId" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="referenceNr" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getTransactionStatusCodeResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax21:StoredTransactionStatusCode"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getTransactionStatus">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="merchantId" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="referenceNr" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getTransactionStatusResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax21:StoredTransactionStatus"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getExtendedTransactionStatus">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="merchantId" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="referenceNr" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getExtendedTransactionStatusResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax21:StoredTransactionStatusExtended"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getCurrencyConversionRate">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="merchantId" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="merchantKeyword" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="rrn" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="fromCurrencyCode" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="toCurrencyCode" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getCurrencyConversionRateResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax21:CurrencyRateDetails"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getCashOutTransactionStatus">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="merchantId" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="referenceNr" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="merchantKeyword" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getCashOutTransactionStatusResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax21:StoredTransferTransactionStatus"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getBankTransferTransactionStatus">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="merchantId" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="referenceNr" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="merchantKeyword" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getBankTransferTransactionStatusResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax21:StoredBankTransferTransactionStatus"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="completeTransactionEx">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="merchantId" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="referenceNr" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="transactionSuccess" type="xs:boolean"/>
+                        <xs:element minOccurs="0" name="overrideAmount" nillable="true" type="xs:string"/>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="goods" nillable="true" type="ax21:GoodsItem"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="completeTransactionExResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="completeTransaction">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="merchantId" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="referenceNr" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="transactionSuccess" type="xs:boolean"/>
+                        <xs:element minOccurs="0" name="overrideAmount" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="completeTransactionResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="completeCashOutTransaction">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="merchantId" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="referenceNr" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="transactionSuccess" type="xs:boolean"/>
+                        <xs:element minOccurs="0" name="merchantKeyword" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="overrideAmount" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="completeCashOutTransactionResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax21:StoredTransferTransactionStatus"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="complete3DS">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="merchantId" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="customerReference" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="paRes" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="md" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="tranGUID" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="complete3DSResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax21:StoredTransactionStatus"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="authorise3DS">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="transaction" nillable="true" type="ax27:TransactionCardDetails"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="authorise3DSResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax23:Authorise3DSResult"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="startCashOutToRegisteredCardRequest">
+        <wsdl:part name="parameters" element="ns:startCashOutToRegisteredCard"/>
+    </wsdl:message>
+    <wsdl:message name="startCashOutToRegisteredCardResponse">
+        <wsdl:part name="parameters" element="ns:startCashOutToRegisteredCardResponse"/>
+    </wsdl:message>
+    <wsdl:message name="startTransactionRequest">
+        <wsdl:part name="parameters" element="ns:startTransaction"/>
+    </wsdl:message>
+    <wsdl:message name="startTransactionResponse">
+        <wsdl:part name="parameters" element="ns:startTransactionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="refundTransactionRequest">
+        <wsdl:part name="parameters" element="ns:refundTransaction"/>
+    </wsdl:message>
+    <wsdl:message name="refundTransactionResponse">
+        <wsdl:part name="parameters" element="ns:refundTransactionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="processBankTransferTransactionRequest">
+        <wsdl:part name="parameters" element="ns:processBankTransferTransaction"/>
+    </wsdl:message>
+    <wsdl:message name="processBankTransferTransactionResponse">
+        <wsdl:part name="parameters" element="ns:processBankTransferTransactionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getTransactionStatusCodeRequest">
+        <wsdl:part name="parameters" element="ns:getTransactionStatusCode"/>
+    </wsdl:message>
+    <wsdl:message name="getTransactionStatusCodeResponse">
+        <wsdl:part name="parameters" element="ns:getTransactionStatusCodeResponse"/>
+    </wsdl:message>
+    <wsdl:message name="startCashInTransactionRequest">
+        <wsdl:part name="parameters" element="ns:startCashInTransaction"/>
+    </wsdl:message>
+    <wsdl:message name="startCashInTransactionResponse">
+        <wsdl:part name="parameters" element="ns:startCashInTransactionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="startCashOutTransactionRequest">
+        <wsdl:part name="parameters" element="ns:startCashOutTransaction"/>
+    </wsdl:message>
+    <wsdl:message name="startCashOutTransactionResponse">
+        <wsdl:part name="parameters" element="ns:startCashOutTransactionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="startTransactionWithCardDetailsRequest">
+        <wsdl:part name="parameters" element="ns:startTransactionWithCardDetails"/>
+    </wsdl:message>
+    <wsdl:message name="startTransactionWithCardDetailsResponse">
+        <wsdl:part name="parameters" element="ns:startTransactionWithCardDetailsResponse"/>
+    </wsdl:message>
+    <wsdl:message name="startTransferTransactionRequest">
+        <wsdl:part name="parameters" element="ns:startTransferTransaction"/>
+    </wsdl:message>
+    <wsdl:message name="startTransferTransactionResponse">
+        <wsdl:part name="parameters" element="ns:startTransferTransactionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="completeTransactionExRequest">
+        <wsdl:part name="parameters" element="ns:completeTransactionEx"/>
+    </wsdl:message>
+    <wsdl:message name="completeTransactionExResponse">
+        <wsdl:part name="parameters" element="ns:completeTransactionExResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getTransferTransactionStatusRequest">
+        <wsdl:part name="parameters" element="ns:getTransferTransactionStatus"/>
+    </wsdl:message>
+    <wsdl:message name="getTransferTransactionStatusResponse">
+        <wsdl:part name="parameters" element="ns:getTransferTransactionStatusResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getBankTransferTransactionStatusRequest">
+        <wsdl:part name="parameters" element="ns:getBankTransferTransactionStatus"/>
+    </wsdl:message>
+    <wsdl:message name="getBankTransferTransactionStatusResponse">
+        <wsdl:part name="parameters" element="ns:getBankTransferTransactionStatusResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getVersionRequest">
+        <wsdl:part name="parameters" element="ns:getVersion"/>
+    </wsdl:message>
+    <wsdl:message name="getVersionResponse">
+        <wsdl:part name="parameters" element="ns:getVersionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="completeCashOutTransactionRequest">
+        <wsdl:part name="parameters" element="ns:completeCashOutTransaction"/>
+    </wsdl:message>
+    <wsdl:message name="completeCashOutTransactionResponse">
+        <wsdl:part name="parameters" element="ns:completeCashOutTransactionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getExtendedTransactionStatusRequest">
+        <wsdl:part name="parameters" element="ns:getExtendedTransactionStatus"/>
+    </wsdl:message>
+    <wsdl:message name="getExtendedTransactionStatusResponse">
+        <wsdl:part name="parameters" element="ns:getExtendedTransactionStatusResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getCurrencyConversionRateRequest">
+        <wsdl:part name="parameters" element="ns:getCurrencyConversionRate"/>
+    </wsdl:message>
+    <wsdl:message name="getCurrencyConversionRateResponse">
+        <wsdl:part name="parameters" element="ns:getCurrencyConversionRateResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getCashOutTransactionStatusRequest">
+        <wsdl:part name="parameters" element="ns:getCashOutTransactionStatus"/>
+    </wsdl:message>
+    <wsdl:message name="getCashOutTransactionStatusResponse">
+        <wsdl:part name="parameters" element="ns:getCashOutTransactionStatusResponse"/>
+    </wsdl:message>
+    <wsdl:message name="authorise3DSRequest">
+        <wsdl:part name="parameters" element="ns:authorise3DS"/>
+    </wsdl:message>
+    <wsdl:message name="authorise3DSResponse">
+        <wsdl:part name="parameters" element="ns:authorise3DSResponse"/>
+    </wsdl:message>
+    <wsdl:message name="complete3DSRequest">
+        <wsdl:part name="parameters" element="ns:complete3DS"/>
+    </wsdl:message>
+    <wsdl:message name="complete3DSResponse">
+        <wsdl:part name="parameters" element="ns:complete3DSResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getTransactionStatusRequest">
+        <wsdl:part name="parameters" element="ns:getTransactionStatus"/>
+    </wsdl:message>
+    <wsdl:message name="getTransactionStatusResponse">
+        <wsdl:part name="parameters" element="ns:getTransactionStatusResponse"/>
+    </wsdl:message>
+    <wsdl:message name="processTrustedTransferTransactionRequest">
+        <wsdl:part name="parameters" element="ns:processTrustedTransferTransaction"/>
+    </wsdl:message>
+    <wsdl:message name="processTrustedTransferTransactionResponse">
+        <wsdl:part name="parameters" element="ns:processTrustedTransferTransactionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="completeTransactionRequest">
+        <wsdl:part name="parameters" element="ns:completeTransaction"/>
+    </wsdl:message>
+    <wsdl:message name="completeTransactionResponse">
+        <wsdl:part name="parameters" element="ns:completeTransactionResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="MerchantWebServicePortType">
+        <wsdl:operation name="startCashOutToRegisteredCard">
+            <wsdl:input message="tns:startCashOutToRegisteredCardRequest" wsaw:Action="urn:startCashOutToRegisteredCard"/>
+            <wsdl:output message="tns:startCashOutToRegisteredCardResponse" wsaw:Action="urn:startCashOutToRegisteredCardResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="startTransaction">
+            <wsdl:input message="tns:startTransactionRequest" wsaw:Action="urn:startTransaction"/>
+            <wsdl:output message="tns:startTransactionResponse" wsaw:Action="urn:startTransactionResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="refundTransaction">
+            <wsdl:input message="tns:refundTransactionRequest" wsaw:Action="urn:refundTransaction"/>
+            <wsdl:output message="tns:refundTransactionResponse" wsaw:Action="urn:refundTransactionResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="processBankTransferTransaction">
+            <wsdl:input message="tns:processBankTransferTransactionRequest" wsaw:Action="urn:processBankTransferTransaction"/>
+            <wsdl:output message="tns:processBankTransferTransactionResponse" wsaw:Action="urn:processBankTransferTransactionResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getTransactionStatusCode">
+            <wsdl:input message="tns:getTransactionStatusCodeRequest" wsaw:Action="urn:getTransactionStatusCode"/>
+            <wsdl:output message="tns:getTransactionStatusCodeResponse" wsaw:Action="urn:getTransactionStatusCodeResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="startCashInTransaction">
+            <wsdl:input message="tns:startCashInTransactionRequest" wsaw:Action="urn:startCashInTransaction"/>
+            <wsdl:output message="tns:startCashInTransactionResponse" wsaw:Action="urn:startCashInTransactionResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="startCashOutTransaction">
+            <wsdl:input message="tns:startCashOutTransactionRequest" wsaw:Action="urn:startCashOutTransaction"/>
+            <wsdl:output message="tns:startCashOutTransactionResponse" wsaw:Action="urn:startCashOutTransactionResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="startTransactionWithCardDetails">
+            <wsdl:input message="tns:startTransactionWithCardDetailsRequest" wsaw:Action="urn:startTransactionWithCardDetails"/>
+            <wsdl:output message="tns:startTransactionWithCardDetailsResponse" wsaw:Action="urn:startTransactionWithCardDetailsResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="startTransferTransaction">
+            <wsdl:input message="tns:startTransferTransactionRequest" wsaw:Action="urn:startTransferTransaction"/>
+            <wsdl:output message="tns:startTransferTransactionResponse" wsaw:Action="urn:startTransferTransactionResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="completeTransactionEx">
+            <wsdl:input message="tns:completeTransactionExRequest" wsaw:Action="urn:completeTransactionEx"/>
+            <wsdl:output message="tns:completeTransactionExResponse" wsaw:Action="urn:completeTransactionExResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getTransferTransactionStatus">
+            <wsdl:input message="tns:getTransferTransactionStatusRequest" wsaw:Action="urn:getTransferTransactionStatus"/>
+            <wsdl:output message="tns:getTransferTransactionStatusResponse" wsaw:Action="urn:getTransferTransactionStatusResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getBankTransferTransactionStatus">
+            <wsdl:input message="tns:getBankTransferTransactionStatusRequest" wsaw:Action="urn:getBankTransferTransactionStatus"/>
+            <wsdl:output message="tns:getBankTransferTransactionStatusResponse" wsaw:Action="urn:getBankTransferTransactionStatusResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getVersion">
+            <wsdl:input message="tns:getVersionRequest" wsaw:Action="urn:getVersion"/>
+            <wsdl:output message="tns:getVersionResponse" wsaw:Action="urn:getVersionResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="completeCashOutTransaction">
+            <wsdl:input message="tns:completeCashOutTransactionRequest" wsaw:Action="urn:completeCashOutTransaction"/>
+            <wsdl:output message="tns:completeCashOutTransactionResponse" wsaw:Action="urn:completeCashOutTransactionResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getExtendedTransactionStatus">
+            <wsdl:input message="tns:getExtendedTransactionStatusRequest" wsaw:Action="urn:getExtendedTransactionStatus"/>
+            <wsdl:output message="tns:getExtendedTransactionStatusResponse" wsaw:Action="urn:getExtendedTransactionStatusResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getCurrencyConversionRate">
+            <wsdl:input message="tns:getCurrencyConversionRateRequest" wsaw:Action="urn:getCurrencyConversionRate"/>
+            <wsdl:output message="tns:getCurrencyConversionRateResponse" wsaw:Action="urn:getCurrencyConversionRateResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getCashOutTransactionStatus">
+            <wsdl:input message="tns:getCashOutTransactionStatusRequest" wsaw:Action="urn:getCashOutTransactionStatus"/>
+            <wsdl:output message="tns:getCashOutTransactionStatusResponse" wsaw:Action="urn:getCashOutTransactionStatusResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="authorise3DS">
+            <wsdl:input message="tns:authorise3DSRequest" wsaw:Action="urn:authorise3DS"/>
+            <wsdl:output message="tns:authorise3DSResponse" wsaw:Action="urn:authorise3DSResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="complete3DS">
+            <wsdl:input message="tns:complete3DSRequest" wsaw:Action="urn:complete3DS"/>
+            <wsdl:output message="tns:complete3DSResponse" wsaw:Action="urn:complete3DSResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getTransactionStatus">
+            <wsdl:input message="tns:getTransactionStatusRequest" wsaw:Action="urn:getTransactionStatus"/>
+            <wsdl:output message="tns:getTransactionStatusResponse" wsaw:Action="urn:getTransactionStatusResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="processTrustedTransferTransaction">
+            <wsdl:input message="tns:processTrustedTransferTransactionRequest" wsaw:Action="urn:processTrustedTransferTransaction"/>
+            <wsdl:output message="tns:processTrustedTransferTransactionResponse" wsaw:Action="urn:processTrustedTransferTransactionResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="completeTransaction">
+            <wsdl:input message="tns:completeTransactionRequest" wsaw:Action="urn:completeTransaction"/>
+            <wsdl:output message="tns:completeTransactionResponse" wsaw:Action="urn:completeTransactionResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:service name="CNPMerchantWebService">
+									<wsdl:port name="CNPMerchantWebServiceHttpSoap11Endpoint" binding="tns:CNPMerchantWebServiceSoap11Binding">
+									<soap:address location="https://test.processing.kz/CNPMerchantWebServices/services/CNPMerchantWebService.CNPMerchantWebServiceHttpSoap11Endpoint/"/>
+									</wsdl:port>
+									<wsdl:port name="CNPMerchantWebServiceHttpsSoap11Endpoint" binding="tns:CNPMerchantWebServiceSoap11Binding">
+									<soap:address location="https://test.processing.kz/CNPMerchantWebServices/services/CNPMerchantWebService.CNPMerchantWebServiceHttpsSoap11Endpoint/"/>
+									</wsdl:port>
+									<wsdl:port name="CNPMerchantWebServiceHttpsSoap12Endpoint" binding="tns:CNPMerchantWebServiceSoap12Binding">
+									<soap12:address location="https://test.processing.kz/CNPMerchantWebServices/services/CNPMerchantWebService.CNPMerchantWebServiceHttpsSoap12Endpoint/"/>
+									</wsdl:port>
+									<wsdl:port name="CNPMerchantWebServiceHttpSoap12Endpoint" binding="tns:CNPMerchantWebServiceSoap12Binding">
+									<soap12:address location="https://test.processing.kz/CNPMerchantWebServices/services/CNPMerchantWebService.CNPMerchantWebServiceHttpSoap12Endpoint/"/>
+									</wsdl:port>
+									<wsdl:port name="CNPMerchantWebServiceHttpsEndpoint" binding="tns:CNPMerchantWebServiceHttpBinding">
+									<http:address location="https://test.processing.kz/CNPMerchantWebServices/services/CNPMerchantWebService.CNPMerchantWebServiceHttpsEndpoint/"/>
+									</wsdl:port>
+									<wsdl:port name="CNPMerchantWebServiceHttpEndpoint" binding="tns:CNPMerchantWebServiceHttpBinding">
+									<http:address location="https://test.processing.kz/CNPMerchantWebServices/services/CNPMerchantWebService.CNPMerchantWebServiceHttpEndpoint/"/>
+									</wsdl:port>
+								</wsdl:service>
+</wsdl:definitions>

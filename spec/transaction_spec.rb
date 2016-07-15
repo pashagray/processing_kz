@@ -5,7 +5,7 @@ feature 'Transaction' do
   before do
 
     ProcessingKz.config do |config|
-      config.wsdl = File.open('./spec/CNPMerchantWebService_test.wsdl', 'r')
+      config.wsdl = 'spec/CNPMerchantWebService_test.wsdl'
       config.host = 'https://test.processing.kz/CNPMerchantWebServices/services/CNPMerchantWebService'
       config.merchant_id = '333000000000000'
       config.language_code = 'en'
