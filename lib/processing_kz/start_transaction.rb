@@ -46,7 +46,6 @@ module ProcessingKz
     end
 
     def merchant_local_date_time=(time)
-      raise ArgumentError unless time.class == Time
       @merchant_local_date_time = time.strftime('%d.%m.%Y %H:%M:%S')
     end
 
