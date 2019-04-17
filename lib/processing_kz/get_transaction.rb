@@ -16,7 +16,8 @@ module ProcessingKz
                 :purchaser_email,
                 :purchaser_phone,
                 :merchant_local_date_time,
-                :merchant_online_address
+                :merchant_online_address,
+                :additional_information
 
     def initialize(args= {})
       @merchant_id = args[:merchant_id] || Config.merchant_id
@@ -72,6 +73,7 @@ module ProcessingKz
       @purchaser_phone = args[:purchaser_phone]
       @merchant_online_address = args[:merchant_online_address]
       @merchant_local_date_time = args[:merchant_local_date_time] || Time.now
+      @additional_information = args[:additional_information]
       self.goods = args[:goods_list]
     end
   end
