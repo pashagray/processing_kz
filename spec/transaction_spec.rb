@@ -7,7 +7,8 @@ feature 'Transaction' do
     ProcessingKz.config do |config|
       config.wsdl = 'spec/CNPMerchantWebService_test.wsdl'
       config.host = 'https://test.processing.kz/CNPMerchantWebServices/services/CNPMerchantWebService'
-      config.merchant_id = '333000000000000'
+      config.merchant_id = '000000000000115'
+      # config.merchant_id = '000000000000098'
       config.language_code = 'en'
       config.currency_code = 398
     end
@@ -17,6 +18,7 @@ feature 'Transaction' do
     @goods << ProcessingKz::GoodsItem.new(title: 'Mega stuff', good_id: 125, amount: 120.99)
 
     @good = ProcessingKz::GoodsItem.new(title: 'One stuff', good_id: 125, amount: 12070)
+    @good_additional = ProcessingKz::GoodsItem.new(title: 'Additional stuff', good_id: 126, amount: 5030)
   end
 
   it 'handles total amount correctly (*100)' do
@@ -51,7 +53,7 @@ feature 'Transaction' do
     fill_in 'cardHolderEmail', with: 'test@processing.kz'
     fill_in 'cardHolderPhone', with: '87771234567'
     click_button 'Pay'
-    sleep 20
+    sleep 5
     status = ProcessingKz::GetTransaction.new(customer_reference: request.customer_reference)
     expect(status.transaction_status).to eq('PAID')
     click_button 'Return'
@@ -92,4 +94,22 @@ feature 'Transaction' do
   #   expect(status.transaction_status).to eq('REVERSED')
   #   click_button 'Return'
   # end
+
+  it 'with 2 MIDs' do
+    start = ProcessingKz.start(order_id: rand(1..1000000), goods_list: @good, return_url: 'http://google.com', additional_goods_list: @good_additional, add_mid: '000000000000098')
+
+    visit start.redirect_url
+    fill_in 'pan', with: '4012 0010 3844 3335'
+    select  '01', from: 'expiryMonth'
+    select  '2021', from: 'expiryYear'
+    fill_in 'cardHolder', with: 'MARIA SIDOROVA'
+    fill_in 'cardSecurityCode', with: '123'
+    fill_in 'cardHolderEmail', with: 'test@processing.kz'
+    fill_in 'cardHolderPhone', with: '87011234567'
+    click_button 'Pay'
+    sleep 5
+    ProcessingKz.complete(customer_reference: start.customer_reference, transaction_success: true)
+    status = ProcessingKz.get(customer_reference: start.customer_reference)
+    expect(status.transaction_status).to eq('PAID')
+  end
 end
